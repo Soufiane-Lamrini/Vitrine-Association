@@ -1,0 +1,337 @@
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Camera, Image, Heart, Eye } from "lucide-react";
+
+const images = [
+  "/images/photo1.jpg",
+  "/images/photo2.jpg",
+  "/images/photo3.jpg",
+  "/images/photo4.jpg",
+  "/images/photo5.jpg",
+  "/images/photo6.jpg",
+  "/images/photo7.jpg",
+  "/images/photo8.jpg",
+  "/images/photo9.jpg",
+];
+
+const categories = [
+  { name: "Tous", count: images.length, icon: Image, gradient: "from-blue-500 to-indigo-600" },
+  { name: "Ateliers", count: 4, icon: Heart, gradient: "from-purple-500 to-pink-600" },
+  { name: "Événements", count: 3, icon: Camera, gradient: "from-emerald-500 to-teal-600" },
+  { name: "Activités", count: 2, icon: Eye, gradient: "from-orange-500 to-red-600" },
+];
+
+function AnimatedCard({ children, delay = 0 }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return (
+    <div
+      className={`transform transition-all duration-1000 ${
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+
+export default function Galerie() {
+  const [navOpen, setNavOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [selectedCategory, setSelectedCategory] = useState("Tous");
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleMouseMove = (e) =>
+      setMousePosition({ x: e.clientX, y: e.clientY });
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-slate-800 overflow-x-hidden">
+      {/* Éléments flottants d'arrière-plan */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div
+          className="absolute w-96 h-96 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
+          style={{
+            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`,
+            left: "10%",
+            top: "20%",
+          }}
+        />
+        <div
+          className="absolute w-80 h-80 bg-gradient-to-r from-emerald-400/10 to-teal-400/10 rounded-full blur-3xl"
+          style={{
+            transform: `translate(${-mousePosition.x * 0.01}px, ${-mousePosition.y * 0.01}px)`,
+            right: "10%",
+            bottom: "20%",
+          }}
+        />
+      </div>
+
+      {/* Header avec navigation */}
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-white/90 backdrop-blur-lg shadow-xl border-b border-white/20"
+            : "bg-transparent"
+        }`}
+      >
+        <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <h1
+            className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
+              scrolled ? "text-slate-800" : "text-white"
+            }`}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            Nour pour l'Enfance
+          </h1>
+
+          <button
+            onClick={() => setNavOpen(!navOpen)}
+            className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+          >
+            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+            <div className={`w-6 h-0.5 bg-current my-1 transition-all duration-300 ${navOpen ? 'opacity-0' : ''}`} />
+            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+          </button>
+
+          <ul className={`hidden md:flex gap-8 ${scrolled ? "text-slate-700" : "text-white"}`}>
+            {["Accueil", "À propos", "Projets", "Galerie", "Contact"].map((item, idx) => (
+              <li
+                key={idx}
+                className="relative cursor-pointer py-2 px-4 rounded-lg hover:bg-white/10 transition-all duration-300 group"
+              >
+                {item}
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 group-hover:w-full transition-all duration-300" />
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+
+      {/* Section Hero */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800"
+          style={{
+            transform: `translate(${mousePosition.x * 0.01}px, ${mousePosition.y * 0.01}px)`,
+          }}
+        />
+
+        {/* Animated particles */}
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 2}s`,
+            }}
+          >
+            <div className="w-2 h-2 bg-white/20 rounded-full" />
+          </div>
+        ))}
+
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+          <div className="animate-fade-in-up">
+            <h2 className="text-5xl md:text-7xl font-black mb-8 text-white leading-tight">
+              Nos Moments
+              <span className="block bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                en Images
+              </span>
+            </h2>
+            <p className="text-2xl md:text-3xl text-blue-100 font-light mb-12 max-w-3xl mx-auto">
+              Découvrez les temps forts de nos actions et ateliers à travers cette galerie photo
+            </p>
+            <div className="flex gap-6 justify-center flex-wrap">
+              <button className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                Voir les photos
+              </button>
+              <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
+                S'impliquer
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse" />
+          </div>
+        </div>
+      </section>
+
+      {/* Section Catégories */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <AnimatedCard>
+          <h3 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Explorez par Catégorie
+          </h3>
+        </AnimatedCard>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {categories.map(({ name, count, icon: IconComponent, gradient }, i) => (
+            <AnimatedCard key={i} delay={i * 150}>
+              <button
+                onClick={() => setSelectedCategory(name)}
+                className={`group relative p-6 w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/20 overflow-hidden ${
+                  selectedCategory === name ? 'ring-2 ring-blue-400' : ''
+                }`}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+
+                <div className="relative z-10 text-center">
+                  <div className={`inline-flex p-4 rounded-full bg-gradient-to-br ${gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <IconComponent className="text-2xl text-white" />
+                  </div>
+                  <h4 className={`text-xl font-bold mb-2 bg-gradient-to-br ${gradient} bg-clip-text text-transparent`}>
+                    {name}
+                  </h4>
+                  <p className="text-slate-600 group-hover:text-slate-800 transition-colors duration-300">
+                    {count} photos
+                  </p>
+                </div>
+              </button>
+            </AnimatedCard>
+          ))}
+        </div>
+      </section>
+
+      {/* Section Galerie */}
+      <section className="pb-20 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          {images.map((src, i) => (
+            <AnimatedCard key={i} delay={i * 100}>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/80 backdrop-blur-sm border border-white/20 cursor-pointer"
+                onClick={() => setSelectedImage(src)}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={src}
+                    alt={`Galerie ${i + 1}`}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <h4 className="font-semibold mb-1">Photo {i + 1}</h4>
+                    <p className="text-sm text-gray-200">Activité • 2024</p>
+                  </div>
+                  <div className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Eye className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatedCard>
+          ))}
+        </div>
+      </section>
+
+      {/* Modal pour image agrandie */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-full">
+            <img
+              src={selectedImage}
+              alt="Image agrandie"
+              className="max-w-full max-h-full object-contain rounded-lg"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors duration-200"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Section Mission */}
+      <section className="py-20 px-6 max-w-5xl mx-auto">
+        <AnimatedCard>
+          <div className="relative p-12 bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl shadow-2xl text-white overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12" />
+
+            <div className="relative z-10 text-center">
+              <h3 className="text-4xl font-bold mb-8">Partagez nos Moments</h3>
+              <blockquote className="text-2xl md:text-3xl font-light italic mb-6 leading-relaxed">
+                "Chaque photo raconte une histoire d'espoir"
+              </blockquote>
+              <p className="text-blue-100 text-lg max-w-3xl mx-auto">
+                Ces images témoignent de nos actions quotidiennes auprès des enfants. 
+                Elles reflètent notre engagement pour l'<span className="font-semibold text-yellow-300">éducation</span>, 
+                l'<span className="font-semibold text-yellow-300">épanouissement</span> et le 
+                <span className="font-semibold text-yellow-300"> bonheur</span> de chaque enfant.
+              </p>
+            </div>
+          </div>
+        </AnimatedCard>
+      </section>
+
+      {/* Pied de page */}
+      <footer className="relative mt-20 bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" />
+
+        <div className="relative z-10 py-12 px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h4 className="text-2xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                Restez Connectés
+              </h4>
+              <div className="flex justify-center space-x-6">
+                {[
+                  { icon: "LinkedIn", href: "#", color: "hover:text-blue-400" },
+                  { icon: "Facebook", href: "https://facebook.com/AssociationNourEnfance", color: "hover:text-blue-500" },
+                  { icon: "Instagram", href: "#", color: "hover:text-pink-400" },
+                  { icon: "TikTok", href: "#", color: "hover:text-purple-400" }
+                ].map(({ icon, href, color }, index) => (
+                  <a
+                    key={index}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`p-3 bg-white/10 backdrop-blur-sm rounded-full ${color} transition-all duration-300 transform hover:scale-110 hover:bg-white/20 text-sm font-semibold`}
+                  >
+                    {icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 pt-8">
+              <p className="text-slate-300">
+                © {new Date().getFullYear()} Association Nour pour l'Enfance. Tous droits réservés.
+              </p>
+              <p className="text-slate-400 mt-2">
+                Rue 17, Quartier Sbata, Casablanca | contact@nour-enfance.org | +212 6 61 23 45 78
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
