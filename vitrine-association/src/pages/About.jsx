@@ -1,22 +1,66 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Heart, Users, GraduationCap, HandHeart } from "lucide-react";
+import { Heart, Users, GraduationCap, HandHeart, BookOpen, Paintbrush, Utensils, Activity } from "lucide-react";
 
-const features = [
-  { icon: "📚", title: "Soutien scolaire", description: "Cours gratuits pour enfants du primaire au collège" },
-  { icon: "🎨", title: "Ateliers artistiques", description: "Peinture, théâtre et musique pour s'épanouir" },
-  { icon: "⚽", title: "Activités sportives", description: "Football et jeux éducatifs" },
-  { icon: "🍎", title: "Goûters solidaires", description: "Distribution de repas nutritifs" },
-  { icon: "🧠", title: "Accompagnement", description: "Soutien psychologique pour enfants en détresse" }
-];
+// Données structurées
+const aboutData = {
+  features: [
+    { 
+      icon: <BookOpen className="w-8 h-8" />, 
+      title: "Soutien scolaire", 
+      description: "Programmes éducatifs personnalisés du primaire au collège",
+      stats: "12 matières couvertes"
+    },
+    { 
+      icon: <Paintbrush className="w-8 h-8" />, 
+      title: "Ateliers artistiques", 
+      description: "Expression créative à travers peinture, théâtre et musique",
+      stats: "8 ateliers/mois"
+    },
+    { 
+      icon: <Activity className="w-8 h-8" />, 
+      title: "Activités sportives", 
+      description: "Football, basket et jeux éducatifs pour le développement physique",
+      stats: "3 entraîneurs diplômés"
+    },
+    { 
+      icon: <Utensils className="w-8 h-8" />, 
+      title: "Nutrition", 
+      description: "Goûters équilibrés et éducation alimentaire",
+      stats: "200 repas/jour"
+    }
+  ],
+  stats: [
+    { label: "Années d'action", value: 4, icon: Users, gradient: "from-emerald-500 to-teal-600" },
+    { label: "Bénévoles actifs", value: 40, icon: HandHeart, gradient: "from-blue-500 to-indigo-600" },
+    { label: "Enfants accompagnés", value: 200, icon: GraduationCap, gradient: "from-purple-500 to-pink-600" },
+    { label: "Interventions/mois", value: 35, icon: Heart, gradient: "from-orange-500 to-red-600" },
+  ],
+  timeline: [
+    { year: "2020", event: "Fondation à Casablanca", description: "Création avec 5 bénévoles" },
+    { year: "2021", event: "Agrément officiel", description: "Reconnue d'utilité publique" },
+    { year: "2022", event: "Premier centre éducatif", description: "Ouverture à Sbata" },
+    { year: "2023", event: "Extension des programmes", description: "3 nouvelles activités lancées" },
+    { year: "2024", event: "Prix de l'innovation sociale", description: "Reconnaissance nationale" },
+    { year: "2025", event: "Projet d'école alternative", description: "Ouverture prévue en septembre" }
+  ],
+  team: [
+    {
+      name: "Soufiane Lamrini",
+      role: "Co-fondateur & Directeur",
+      bio: "Expert en développement associatif avec 10 ans d'expérience dans le secteur social.",
+      img: "src/assets/images/galerie/SoufianeLamrini.jpg" // Chemin vers l'image
+    },
+    {
+      name: "Charaf Eddine Jador",
+      role: "Co-fondateur & Coordinateur",
+      bio: "Spécialiste en éducation alternative et développement des compétences chez les jeunes.",
+      img: "src/assets/images/galerie/Charaf.jpg" // Chemin vers l'image
+    }
+  ]
+};
 
-const stats = [
-  { label: "Années d'action", value: 4, icon: Users, gradient: "from-emerald-500 to-teal-600" },
-  { label: "Bénévoles actifs", value: 40, icon: HandHeart, gradient: "from-blue-500 to-indigo-600" },
-  { label: "Enfants accompagnés", value: 200, icon: GraduationCap, gradient: "from-purple-500 to-pink-600" },
-  { label: "Ateliers/mois", value: 12, icon: Heart, gradient: "from-orange-500 to-red-600" },
-];
-
+// Composants optimisés
 function CountUp({ end, duration = 2, suffix = "" }) {
   const [count, setCount] = useState(0);
   
@@ -25,12 +69,8 @@ function CountUp({ end, duration = 2, suffix = "" }) {
     const increment = end / (duration * 60);
     const timer = setInterval(() => {
       start += increment;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
+      setCount(Math.floor(start));
+      if (start >= end) clearInterval(timer);
     }, 1000 / 60);
     
     return () => clearInterval(timer);
@@ -40,21 +80,14 @@ function CountUp({ end, duration = 2, suffix = "" }) {
 }
 
 function AnimatedCard({ children, delay = 0 }) {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), delay);
-    return () => clearTimeout(timer);
-  }, [delay]);
-  
   return (
-    <div 
-      className={`transform transition-all duration-1000 ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-      }`}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: delay * 0.1 }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
@@ -98,7 +131,7 @@ export default function About() {
         />
       </div>
 
-      {/* Header avec navigation */}
+      {/* Header */}
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
           scrolled 
@@ -179,7 +212,10 @@ export default function About() {
               <button className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 S'impliquer
               </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
+              <button 
+                onClick={() => document.getElementById('mission').scrollIntoView({ behavior: 'smooth' })}
+                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1"
+              >
                 En savoir plus
               </button>
             </div>
@@ -193,92 +229,161 @@ export default function About() {
         </div>
       </section>
 
-      {/* Section Qui Sommes-Nous */}
-      <section className="py-20 px-6 max-w-6xl mx-auto relative">
+      {/* Section Mission */}
+      <section id="mission" className="py-20 px-6 max-w-6xl mx-auto">
         <AnimatedCard>
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Notre Identité
+              Notre Mission
             </h3>
             <p className="text-xl text-slate-600 max-w-4xl mx-auto leading-relaxed">
-              Fondée le <span className="font-bold text-blue-600">28 janvier 2020</span> à <span className="font-bold text-blue-600">Casablanca</span>, 
-              l'Association Nour pour l'Enfance est reconnue sous le statut d'association à but non lucratif (loi 1958).
+              Offrir à chaque enfant les <span className="font-bold text-blue-600">outils éducatifs</span>, 
+              le <span className="font-bold text-blue-600">soutien psychologique</span> et les 
+              <span className="font-bold text-blue-600"> activités épanouissantes</span> nécessaires à son développement.
             </p>
           </div>
         </AnimatedCard>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {features.map((feature, i) => (
-            <AnimatedCard key={i} delay={i * 100}>
-              <div className="group p-6 bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 border border-white/20">
-                <div className="flex flex-col items-center gap-4 text-center">
-                  <div className="text-4xl group-hover:scale-125 transition-transform duration-300">
-                    {feature.icon}
-                  </div>
-                  <h4 className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors duration-300">
-                    {feature.title}
-                  </h4>
-                  <p className="text-slate-600">
-                    {feature.description}
-                  </p>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {aboutData.features.map((feature, i) => (
+            <AnimatedCard key={i} delay={i}>
+              <div className="h-full p-6 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-xl transition-all border border-white/20 flex flex-col">
+                <div className="mb-4 text-blue-600">
+                  {feature.icon}
                 </div>
+                <h3 className="text-xl font-bold mb-2 text-slate-800">{feature.title}</h3>
+                <p className="text-slate-600 mb-4 flex-grow">{feature.description}</p>
+                <p className="text-sm text-blue-500 font-medium">{feature.stats}</p>
               </div>
             </AnimatedCard>
           ))}
         </div>
       </section>
 
-      {/* Section Statistiques */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <AnimatedCard>
-          <h3 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Notre Impact en Chiffres
-          </h3>
-        </AnimatedCard>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map(({ label, value, suffix, icon: IconComponent, gradient }, i) => (
-            <AnimatedCard key={i} delay={i * 150}>
-              <div className="group relative p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/20 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-                
-                <div className="relative z-10 text-center">
-                  <div className={`inline-flex p-4 rounded-full bg-gradient-to-br ${gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    {IconComponent && <IconComponent className="text-2xl text-white" />}
-                  </div>
-                  <h4 className={`text-4xl font-black mb-3 bg-gradient-to-br ${gradient} bg-clip-text text-transparent`}>
-                    <CountUp end={value} duration={2} suffix={suffix || ""} />
-                  </h4>
-                  <p className="font-semibold text-slate-600 group-hover:text-slate-800 transition-colors duration-300">
-                    {label}
-                  </p>
-                </div>
-              </div>
-            </AnimatedCard>
-          ))}
-        </div>
-      </section>
-
-      {/* Section Mission */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
-        <AnimatedCard>
-          <div className="relative p-12 bg-gradient-to-br from-blue-600 to-purple-700 rounded-3xl shadow-2xl text-white overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12" />
-            
-            <div className="relative z-10 text-center">
-              <h3 className="text-4xl font-bold mb-8">Notre Engagement</h3>
-              <blockquote className="text-2xl md:text-3xl font-light italic mb-6 leading-relaxed">
-                "Chaque enfant mérite un avenir lumineux"
-              </blockquote>
-              <p className="text-blue-100 text-lg max-w-3xl mx-auto">
-                Nous intervenons dans les domaines de <span className="font-semibold text-yellow-300">l'éducation</span>, 
-                de la <span className="font-semibold text-yellow-300">protection infantile</span> et de 
-                l'<span className="font-semibold text-yellow-300">épanouissement social</span> à travers 7 programmes clés.
+      {/* Section Chiffres Clés */}
+      <section className="py-20 bg-slate-50">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedCard>
+            <div className="text-center mb-16">
+              <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Notre Impact
+              </h3>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Des résultats concrets grâce à l'engagement de notre communauté
               </p>
             </div>
+          </AnimatedCard>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {aboutData.stats.map((stat, i) => (
+              <AnimatedCard key={i} delay={i}>
+                <div className={`p-8 rounded-xl bg-gradient-to-br ${stat.gradient} text-white text-center shadow-lg`}>
+                  <div className="text-5xl font-bold mb-2">
+                    <CountUp end={stat.value} duration={2} />
+                  </div>
+                  <p className="text-lg">{stat.label}</p>
+                </div>
+              </AnimatedCard>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Histoire */}
+      <section className="py-20 px-6 max-w-4xl mx-auto">
+        <AnimatedCard>
+          <div className="text-center mb-16">
+            <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Notre Histoire
+            </h3>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Le parcours qui a façonné notre association
+            </p>
           </div>
         </AnimatedCard>
+
+        <div className="relative">
+          <div className="absolute left-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500 transform -translate-x-1/2 hidden md:block" />
+          
+          {aboutData.timeline.map((item, i) => (
+            <AnimatedCard key={i} delay={i}>
+              <div className={`mb-12 w-full flex ${i % 2 === 0 ? "md:flex-row flex-col" : "md:flex-row-reverse flex-col"}`}>
+                <div className="md:w-1/2 px-4 md:px-8">
+                  <div className={`p-6 bg-white rounded-lg shadow-md border border-slate-100 relative ${
+                    i % 2 === 0 ? "md:text-right text-left" : "text-left"
+                  }`}>
+                    <div className={`absolute top-1/2 w-4 h-4 rounded-full bg-blue-600 transform -translate-y-1/2 hidden md:block ${
+                      i % 2 === 0 ? "-right-2" : "-left-2"
+                    }`} />
+                    <h3 className="text-xl font-bold text-blue-600">{item.year}</h3>
+                    <h4 className="text-lg font-semibold mb-2 text-slate-800">{item.event}</h4>
+                    <p className="text-slate-600">{item.description}</p>
+                  </div>
+                </div>
+                <div className="md:w-1/2"></div>
+              </div>
+            </AnimatedCard>
+          ))}
+        </div>
+      </section>
+
+      {/* Section Équipe */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedCard>
+            <div className="text-center mb-16">
+              <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Notre Équipe
+              </h3>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+                Des professionnels engagés au service des enfants
+              </p>
+            </div>
+          </AnimatedCard>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {aboutData.team.map((member, i) => (
+              <AnimatedCard key={i} delay={i * 0.2}>
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-slate-100 hover:shadow-xl transition-all h-full">
+                  <div className="h-64 relative overflow-hidden">
+                    {/* Image du membre */}
+                    <img 
+                      src={member.img} 
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null; 
+                        e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect fill='%23" + (i === 0 ? '3b82f6' : '8b5cf6') + "' width='400' height='400'/%3E%3Ctext fill='%23ffffff' font-family='sans-serif' font-size='80' dy='.35em' text-anchor='middle' x='200' y='200'%3E" + member.name.split(' ')[0].charAt(0) + member.name.split(' ')[1].charAt(0) + "%3C/text%3E%3C/svg%3E"
+                      }}
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-slate-800">{member.name}</h3>
+                    <p className={`font-medium mb-2 ${i === 0 ? 'text-blue-600' : 'text-purple-600'}`}>{member.role}</p>
+                    <p className="text-slate-600">{member.bio}</p>
+                    <div className="mt-4 flex space-x-3">
+                      <a href="#" className={`${i === 0 ? 'text-blue-500 hover:text-blue-700' : 'text-purple-500 hover:text-purple-700'}`}>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+                        </svg>
+                      </a>
+                      <a href="#" className={`${i === 0 ? 'text-blue-400 hover:text-blue-600' : 'text-purple-400 hover:text-purple-600'}`}>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                        </svg>
+                      </a>
+                      <a href="#" className={`${i === 0 ? 'text-blue-600 hover:text-blue-800' : 'text-purple-600 hover:text-purple-800'}`}>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedCard>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Section Vision */}
@@ -291,19 +396,18 @@ export default function About() {
             <div className="relative z-10 text-center">
               <h3 className="text-4xl font-bold mb-8">Notre Vision</h3>
               <p className="text-xl md:text-2xl font-light leading-relaxed max-w-4xl mx-auto">
-                Un Casablanca où chaque enfant, quelles que soient ses origines, a accès à l'éducation, 
-                à la protection et à des activités épanouissantes.
-                <br />
-                <span className="font-semibold mt-4 block">
-                  Ensemble, construisons cet avenir.
-                </span>
+                Nous rêvons d’un Maroc où chaque enfant, quel que soit son milieu, bénéficie d’une éducation de qualité, d’un environnement protecteur et
+                 d’activités qui nourrissent son cœur, son esprit et ses rêves. Un Maroc où chaque enfant a la chance de s’épanouir et de construire son avenir en toute dignité.
+              </p>
+              <p className="font-semibold mt-6 text-yellow-200">
+                Ensemble, construisons cet avenir.
               </p>
             </div>
           </div>
         </AnimatedCard>
       </section>
 
-      {/* Pied de page */}
+      {/* Footer */}
       <footer className="relative mt-20 bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" />
         

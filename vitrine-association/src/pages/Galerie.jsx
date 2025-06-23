@@ -1,24 +1,81 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Camera, Image, Heart, Eye } from "lucide-react";
+import { Camera, Image, Heart, Eye, Download, Share2, ChevronLeft, ChevronRight } from "lucide-react";
 
-const images = [
-  "/images/photo1.jpg",
-  "/images/photo2.jpg",
-  "/images/photo3.jpg",
-  "/images/photo4.jpg",
-  "/images/photo5.jpg",
-  "/images/photo6.jpg",
-  "/images/photo7.jpg",
-  "/images/photo8.jpg",
-  "/images/photo9.jpg",
+const galleryItems = [
+  {
+    id: 1,
+    src: "src/assets/images/galerie/téléchargement.webp",
+    category: "Ateliers",
+    title: "Atelier d'Art Thérapie",
+    date: "15 Mars 2024",
+    description: "Les enfants ont exprimé leurs émotions à travers la peinture lors de notre atelier d'art thérapie hebdomadaire. Cet espace de création libre permet aux enfants de s'exprimer sans mots et de développer leur confiance en eux.",
+    location: "Centre Nour, Casablanca",
+    quote: "« La peinture m'aide à montrer ce que je ressens » - Amina, 8 ans",
+    tags: ["Art", "Thérapie", "Créativité"]
+  },
+  {
+    id: 2,
+    src: "src/assets/images/galerie/distribué .jpeg",
+    category: "Activités",
+    title: "Distribution de Kits Scolaires",
+    date: "10 Septembre 2023",
+    description: "Pour la rentrée scolaire, nous avons distribué 250 kits complets (cartables, fournitures, uniformes) aux enfants défavorisés du quartier Sbata. Cette action permet de réduire les inégalités et d'offrir les mêmes chances à tous.",
+    location: "École Al Amal, Casablanca",
+    quote: "« Maintenant je peux aller à l'école comme mes amis ! » - Youssef, 7 ans",
+    tags: ["Éducation", "Scolarité", "Rentrée"]
+  },
+  {
+    id: 3,
+    src: "src/assets/images/galerie/Anniversaire.jpg", 
+    category: "Événements",
+    title: "Fête d'Anniversaire Collective",
+    date: "20 Avril 2024",
+    description: "Nous célébrons chaque trimestre les anniversaires de tous les enfants qui n'ont pas la chance de fêter leur jour spécial en famille. Jeux, gâteaux et cadeaux rendent ces moments inoubliables.",
+    location: "Jardin Public de Casablanca",
+    quote: "« C'était mon premier gâteau d'anniversaire » - Karim, 13 ans",
+    tags: ["Fête", "Joie", "Célébration"]
+  },
+  {
+    id: 4,
+    src: "src/assets/images/galerie/SoutienScolaire.jpg", 
+    category: "Ateliers",
+    title: "Cours de Soutien Scolaire",
+    date: "5 Janvier 2024",
+    description: "Nos bénévoles offrent un soutien scolaire personnalisé pour aider les enfants en difficulté. Chaque séance est adaptée aux besoins spécifiques de l'enfant.",
+    location: "Bibliothèque Municipale",
+    quote: "« Maintenant je comprends mieux les maths ! » - Leila, 10 ans",
+    tags: ["Éducation", "Apprentissage", "Soutien"]
+  },
+  {
+    id: 5,
+    src: "src/assets/images/galerie/img.webp", 
+    category: "Activités",
+    title: "Sortie Éducative au Musée",
+    date: "12 Novembre 2023",
+    description: "Découverte culturelle pour 50 enfants au Musée d'Art Contemporain. Cette sortie a éveillé leur curiosité et élargi leurs horizons.",
+    location: "Musée d'Art Contemporain, Casablanca",
+    quote: "« Je veux devenir artiste plus tard ! » - Samir, 11 ans",
+    tags: ["Culture", "Découverte", "Sortie"]
+  },
+  {
+    id: 6,
+    src: "src/assets/images/galerie/Sport.png", 
+    category: "Événements",
+    title: "Tournoi Sportif Annuel",
+    date: "8 Juin 2024",
+    description: "Compétition amicale entre les enfants de différents centres. Football, course et jeux traditionnels ont rythmé cette journée sportive.",
+    location: "Stade Municipal",
+    quote: "« On a gagné mais l'important c'était de jouer ensemble » - Team Espoir",
+    tags: ["Sport", "Compétition", "Équipe"]
+  }
 ];
 
 const categories = [
-  { name: "Tous", count: images.length, icon: Image, gradient: "from-blue-500 to-indigo-600" },
-  { name: "Ateliers", count: 4, icon: Heart, gradient: "from-purple-500 to-pink-600" },
-  { name: "Événements", count: 3, icon: Camera, gradient: "from-emerald-500 to-teal-600" },
-  { name: "Activités", count: 2, icon: Eye, gradient: "from-orange-500 to-red-600" },
+  { name: "Tous", count: galleryItems.length, icon: Image, gradient: "from-blue-500 to-indigo-600" },
+  { name: "Ateliers", count: galleryItems.filter(i => i.category === "Ateliers").length, icon: Heart, gradient: "from-purple-500 to-pink-600" },
+  { name: "Événements", count: galleryItems.filter(i => i.category === "Événements").length, icon: Camera, gradient: "from-emerald-500 to-teal-600" },
+  { name: "Activités", count: galleryItems.filter(i => i.category === "Activités").length, icon: Eye, gradient: "from-orange-500 to-red-600" },
 ];
 
 function AnimatedCard({ children, delay = 0 }) {
@@ -30,13 +87,13 @@ function AnimatedCard({ children, delay = 0 }) {
   }, [delay]);
 
   return (
-    <div
-      className={`transform transition-all duration-1000 ${
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-      }`}
+    <motion.div
+      initial={{ y: 50, opacity: 0 }}
+      animate={isVisible ? { y: 0, opacity: 1 } : {}}
+      transition={{ duration: 0.5, delay: delay / 1000 }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
@@ -60,6 +117,19 @@ export default function Galerie() {
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  const navigateImage = (direction) => {
+    const currentIndex = galleryItems.findIndex(img => img.id === selectedImage.id);
+    let newIndex;
+    
+    if (direction === 'prev') {
+      newIndex = currentIndex === 0 ? galleryItems.length - 1 : currentIndex - 1;
+    } else {
+      newIndex = currentIndex === galleryItems.length - 1 ? 0 : currentIndex + 1;
+    }
+    
+    setSelectedImage(galleryItems[newIndex]);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-slate-800 overflow-x-hidden">
@@ -161,7 +231,10 @@ export default function Galerie() {
               Découvrez les temps forts de nos actions et ateliers à travers cette galerie photo
             </p>
             <div className="flex gap-6 justify-center flex-wrap">
-              <button className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+              <button 
+                onClick={() => document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' })}
+                className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+              >
                 Voir les photos
               </button>
               <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
@@ -205,7 +278,7 @@ export default function Galerie() {
                     {name}
                   </h4>
                   <p className="text-slate-600 group-hover:text-slate-800 transition-colors duration-300">
-                    {count} photos
+                    {count} {count > 1 ? 'photos' : 'photo'}
                   </p>
                 </div>
               </button>
@@ -215,34 +288,36 @@ export default function Galerie() {
       </section>
 
       {/* Section Galerie */}
-      <section className="pb-20 px-6 max-w-7xl mx-auto">
+      <section id="gallery-section" className="pb-20 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {images.map((src, i) => (
-            <AnimatedCard key={i} delay={i * 100}>
-              <motion.div
-                whileHover={{ scale: 1.05, y: -10 }}
-                className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/80 backdrop-blur-sm border border-white/20 cursor-pointer"
-                onClick={() => setSelectedImage(src)}
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={src}
-                    alt={`Galerie ${i + 1}`}
-                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <h4 className="font-semibold mb-1">Photo {i + 1}</h4>
-                    <p className="text-sm text-gray-200">Activité • 2024</p>
+          {galleryItems
+            .filter(item => selectedCategory === "Tous" || item.category === selectedCategory)
+            .map((item, i) => (
+              <AnimatedCard key={item.id} delay={i * 100}>
+                <motion.div
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/80 backdrop-blur-sm border border-white/20 cursor-pointer"
+                  onClick={() => setSelectedImage(item)}
+                >
+                  <div className="relative overflow-hidden aspect-square">
+                    <img
+                      src={item.src}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <h4 className="font-semibold mb-1">{item.title}</h4>
+                      <p className="text-sm text-gray-200">{item.category} • {item.date}</p>
+                    </div>
+                    <div className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <Eye className="w-4 h-4 text-white" />
+                    </div>
                   </div>
-                  <div className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Eye className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatedCard>
-          ))}
+                </motion.div>
+              </AnimatedCard>
+            ))}
         </div>
       </section>
 
@@ -252,18 +327,88 @@ export default function Galerie() {
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-4xl max-h-full">
-            <img
-              src={selectedImage}
-              alt="Image agrandie"
-              className="max-w-full max-h-full object-contain rounded-lg"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors duration-200"
-            >
-              ✕
-            </button>
+          <div className="relative max-w-4xl w-full bg-white rounded-xl overflow-hidden max-h-[90vh]"
+               onClick={(e) => e.stopPropagation()}>
+            <div className="grid md:grid-cols-2 gap-0 h-full">
+              {/* Partie Image */}
+              <div className="relative h-full min-h-96">
+                <img src={selectedImage.src} 
+                     alt={selectedImage.title}
+                     className="w-full h-full object-cover"/>
+                <div className="absolute top-1/2 left-4 transform -translate-y-1/2">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); navigateImage('prev') }}
+                    className="p-2 bg-white/80 rounded-full shadow-md hover:bg-white transition-colors duration-200"
+                  >
+                    <ChevronLeft className="w-5 h-5 text-slate-800" />
+                  </button>
+                </div>
+                <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); navigateImage('next') }}
+                    className="p-2 bg-white/80 rounded-full shadow-md hover:bg-white transition-colors duration-200"
+                  >
+                    <ChevronRight className="w-5 h-5 text-slate-800" />
+                  </button>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                  <p className="text-white font-medium">{selectedImage.title}</p>
+                  <p className="text-white/80 text-sm">{selectedImage.date}</p>
+                </div>
+              </div>
+              
+              {/* Partie Description */}
+              <div className="p-8 bg-white overflow-y-auto">
+                <button onClick={() => setSelectedImage(null)}
+                        className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100">
+                  ✕
+                </button>
+                
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">{selectedImage.title}</h3>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                    {selectedImage.category}
+                  </span>
+                  <span className="text-slate-500 text-sm">{selectedImage.location}</span>
+                </div>
+                
+                <p className="text-slate-600 mb-6">{selectedImage.description}</p>
+                
+                {selectedImage.tags && (
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {selectedImage.tags.map(tag => (
+                      <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                
+                {selectedImage.quote && (
+                  <blockquote className="border-l-4 border-orange-500 pl-4 italic text-slate-700 mb-6">
+                    {selectedImage.quote}
+                  </blockquote>
+                )}
+                
+                <div className="flex gap-3 flex-wrap">
+                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2">
+                    <Share2 size={16} />
+                    Partager
+                  </button>
+                  <a 
+                    href={selectedImage.src} 
+                    download 
+                    className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 flex items-center gap-2"
+                  >
+                    <Download size={16} />
+                    Télécharger
+                  </a>
+                  <button className="px-4 py-2 border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-50">
+                    Voir plus de photos
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
