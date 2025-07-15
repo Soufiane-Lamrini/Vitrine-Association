@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Palette, Trophy, Heart, Users, Calendar, MapPin, Target, ArrowRight, CheckCircle } from "lucide-react";
-
+import * as images from '../images';
 const projects = [
   {
     id: 1,
@@ -11,7 +11,7 @@ const projects = [
     longDescription: "Notre programme de soutien scolaire offre un accompagnement personnalisé aux enfants du primaire au collège. Nous proposons des cours de rattrapage, de l'aide aux devoirs et un suivi individualisé pour garantir la réussite de chaque enfant.",
     icon: BookOpen,
     gradient: "from-blue-500 to-indigo-600",
-    image: "/images/soutien-scolaire.jpg",
+    image: images.soutienScolaire,
     status: "En cours",
     participants: 85,
     startDate: "Sept 2023",
@@ -24,13 +24,51 @@ const projects = [
   },
   {
     id: 2,
+    title: "Bibliothèque Mobile",
+    category: "Éducation",
+    description: "Accès aux livres dans les quartiers défavorisés",
+    longDescription: "Notre bibliothèque mobile visite les quartiers défavorisés chaque semaine pour donner accès aux livres et à la lecture. Nous organisons des séances de lecture et des ateliers autour du livre.",
+    icon: BookOpen,
+    gradient: "from-blue-500 to-indigo-600",
+    image: images.bibliotheque,
+    status: "En cours",
+    participants: 120,
+    startDate: "Jan 2024",
+    achievements: [
+      "120 enfants bénéficiaires",
+      "500 livres disponibles",
+      "4 quartiers visités",
+      "20 séances de lecture/mois"
+    ]
+  },
+  {
+    id: 3,
+    title: "Cours de Langues",
+    category: "Éducation",
+    description: "Apprentissage des langues étrangères pour enfants",
+    longDescription: "Nous proposons des cours d'anglais et de français adaptés aux enfants, avec une approche ludique et interactive pour faciliter l'apprentissage des langues étrangères.",
+    icon: BookOpen,
+    gradient: "from-blue-500 to-indigo-600",
+    image: images.langues,
+    status: "En cours",
+    participants: 60,
+    startDate: "Mars 2024",
+    achievements: [
+      "60 enfants inscrits",
+      "3 niveaux différents",
+      "Professeurs qualifiés",
+      "Méthode ludique"
+    ]
+  },
+  {
+    id: 4,
     title: "Ateliers Créatifs",
     category: "Art & Culture",
     description: "Expression artistique et développement de la créativité",
     longDescription: "Les ateliers créatifs permettent aux enfants de s'exprimer à travers l'art. Peinture, théâtre, musique et artisanat sont au programme pour développer leur créativité et leur confiance en soi.",
     icon: Palette,
     gradient: "from-purple-500 to-pink-600",
-    image: "/images/ateliers-creatifs.jpg",
+    image: images.ateliersCreatifs,
     status: "En cours",
     participants: 42,
     startDate: "Jan 2024",
@@ -42,14 +80,52 @@ const projects = [
     ]
   },
   {
-    id: 3,
+    id: 5,
+    title: "Théâtre pour Enfants",
+    category: "Art & Culture",
+    description: "Développement personnel par le jeu théâtral",
+    longDescription: "Nos ateliers de théâtre aident les enfants à développer leur confiance en eux, leur expression orale et leur créativité à travers des exercices ludiques et des représentations.",
+    icon: Palette,
+    gradient: "from-purple-500 to-pink-600",
+    image: images.theatre,
+    status: "En cours",
+    participants: 35,
+    startDate: "Fév 2024",
+    achievements: [
+      "35 enfants acteurs",
+      "2 spectacles montés",
+      "Professeurs de théâtre",
+      "Scène professionnelle"
+    ]
+  },
+  {
+    id: 6,
+    title: "Musique et Chant",
+    category: "Art & Culture",
+    description: "Initiation à la musique et au chant choral",
+    longDescription: "Nous proposons des ateliers d'initiation à la musique, au chant et à divers instruments pour éveiller les enfants à l'univers musical.",
+    icon: Palette,
+    gradient: "from-purple-500 to-pink-600",
+    image: images.musique,
+    status: "En cours",
+    participants: 28,
+    startDate: "Avr 2024",
+    achievements: [
+      "28 musiciens en herbe",
+      "5 instruments enseignés",
+      "1 concert par trimestre",
+      "Studio d'enregistrement"
+    ]
+  },
+  {
+    id: 7,
     title: "Sport pour Tous",
     category: "Sport & Santé",
     description: "Activités sportives pour le bien-être physique et mental",
     longDescription: "Le programme Sport pour Tous encourage l'activité physique chez les enfants. Football, basketball, courses et jeux collectifs contribuent à leur développement physique et à l'esprit d'équipe.",
     icon: Trophy,
     gradient: "from-emerald-500 to-teal-600",
-    image: "/images/sport.jpg",
+    image: images.sport,
     status: "En cours",
     participants: 68,
     startDate: "Mars 2023",
@@ -61,14 +137,52 @@ const projects = [
     ]
   },
   {
-    id: 4,
+    id: 8,
+    title: "Yoga pour Enfants",
+    category: "Sport & Santé",
+    description: "Détente et concentration par le yoga",
+    longDescription: "Nos séances de yoga adaptées aux enfants leur apprennent à se détendre, à mieux respirer et à se concentrer, tout en développant leur souplesse.",
+    icon: Trophy,
+    gradient: "from-emerald-500 to-teal-600",
+    image: images.yoga,
+    status: "En cours",
+    participants: 40,
+    startDate: "Mai 2024",
+    achievements: [
+      "40 enfants yogis",
+      "2 séances par semaine",
+      "Professeurs certifiés",
+      "Matériel fourni"
+    ]
+  },
+  {
+    id: 9,
+    title: "Nutrition Santé",
+    category: "Sport & Santé",
+    description: "Éducation à une alimentation équilibrée",
+    longDescription: "Nous éduquons les enfants à l'importance d'une alimentation saine à travers des ateliers pratiques et ludiques sur la nutrition.",
+    icon: Trophy,
+    gradient: "from-emerald-500 to-teal-600",
+    image: images.nutrition,
+    status: "En cours",
+    participants: 55,
+    startDate: "Juin 2024",
+    achievements: [
+      "55 enfants sensibilisés",
+      "10 ateliers nutrition",
+      "Cours de cuisine",
+      "Guide alimentaire"
+    ]
+  },
+  {
+    id: 10,
     title: "Aide Alimentaire",
     category: "Solidarité",
     description: "Distribution de repas et goûters nutritifs aux enfants",
     longDescription: "Le programme d'aide alimentaire garantit l'accès à une alimentation équilibrée pour tous les enfants. Nous organisons des distributions de repas et sensibilisons à l'importance de la nutrition.",
     icon: Heart,
     gradient: "from-orange-500 to-red-600",
-    image: "/images/aide-alimentaire.jpg",
+    image: images.aideAlimentaire,
     status: "En cours",
     participants: 150,
     startDate: "Fév 2020",
@@ -80,14 +194,52 @@ const projects = [
     ]
   },
   {
-    id: 5,
+    id: 11,
+    title: "Kits Scolaires",
+    category: "Solidarité",
+    description: "Fournitures scolaires pour enfants défavorisés",
+    longDescription: "Chaque rentrée scolaire, nous distribuons des kits complets de fournitures scolaires aux enfants issus de familles défavorisées.",
+    icon: Heart,
+    gradient: "from-orange-500 to-red-600",
+    image: images.kitsScolaires,
+    status: "Saisonnier",
+    participants: 200,
+    startDate: "Sept 2023",
+    achievements: [
+      "200 kits distribués",
+      "10 écoles partenaires",
+      "Matériel de qualité",
+      "Parrainages possibles"
+    ]
+  },
+  {
+    id: 12,
+    title: "Vêtements d'Hiver",
+    category: "Solidarité",
+    description: "Distribution de vêtements chauds pour l'hiver",
+    longDescription: "Avant chaque hiver, nous collectons et distribuons des vêtements chauds (manteaux, pulls, bonnets) aux enfants dans le besoin.",
+    icon: Heart,
+    gradient: "from-orange-500 to-red-600",
+    image: images.vetements,
+    status: "Saisonnier",
+    participants: 180,
+    startDate: "Nov 2023",
+    achievements: [
+      "180 enfants équipés",
+      "500 pièces distribuées",
+      "Collecte nationale",
+      "Partenariats locaux"
+    ]
+  },
+  {
+    id: 13,
     title: "École de Demain",
     category: "Innovation",
     description: "Modernisation des méthodes d'apprentissage avec le numérique",
     longDescription: "Le projet École de Demain vise à intégrer les technologies numériques dans l'apprentissage. Tablettes, logiciels éducatifs et méthodes innovantes pour préparer les enfants au monde de demain.",
     icon: Target,
     gradient: "from-cyan-500 to-blue-600",
-    image: "/images/ecole-demain.jpg",
+    image: images.ecoleDemain,
     status: "En préparation",
     participants: 0,
     startDate: "Sept 2024",
@@ -99,14 +251,52 @@ const projects = [
     ]
   },
   {
-    id: 6,
+    id: 14,
+    title: "Coding Club",
+    category: "Innovation",
+    description: "Initiation à la programmation pour enfants",
+    longDescription: "Nous initions les enfants aux bases de la programmation à travers des ateliers ludiques utilisant Scratch et d'autres outils adaptés.",
+    icon: Target,
+    gradient: "from-cyan-500 to-blue-600",
+    image: images.coding,
+    status: "En cours",
+    participants: 30,
+    startDate: "Jan 2024",
+    achievements: [
+      "30 petits codeurs",
+      "Ateliers hebdomadaires",
+      "Projets concrets",
+      "Compétitions amicales"
+    ]
+  },
+  {
+    id: 15,
+    title: "Robotique Éducative",
+    category: "Innovation",
+    description: "Découverte de la robotique via des kits pédagogiques",
+    longDescription: "Les enfants apprennent les bases de la robotique en construisant et programmant de petits robots éducatifs, développant ainsi leur logique et créativité.",
+    icon: Target,
+    gradient: "from-cyan-500 to-blue-600",
+    image: images.robotique,
+    status: "En cours",
+    participants: 25,
+    startDate: "Fév 2024",
+    achievements: [
+      "25 robots construits",
+      "3 niveaux de difficulté",
+      "Compétition annuelle",
+      "Partenariat avec une école d'ingénieurs"
+    ]
+  },
+  {
+    id: 16,
     title: "Camps d'Été",
     category: "Loisirs",
     description: "Colonies de vacances éducatives et ludiques",
     longDescription: "Les camps d'été offrent aux enfants des vacances enrichissantes mêlant loisirs, apprentissage et découvertes. Une semaine de bonheur dans un cadre sécurisé avec des activités variées.",
     icon: Users,
     gradient: "from-yellow-500 to-orange-600",
-    image: "/images/camps-ete.jpg",
+    image: images.campsEte,
     status: "Saisonnier",
     participants: 120,
     startDate: "Juil 2024",
@@ -116,11 +306,49 @@ const projects = [
       "15 animateurs formés",
       "100% de satisfaction"
     ]
+  },
+  {
+    id: 17,
+    title: "Sorties Culturelles",
+    category: "Loisirs",
+    description: "Découverte des musées et sites historiques",
+    longDescription: "Nous organisons régulièrement des sorties culturelles pour faire découvrir aux enfants les richesses de leur patrimoine culturel et historique.",
+    icon: Users,
+    gradient: "from-yellow-500 to-orange-600",
+    image: images.sorties,
+    status: "En cours",
+    participants: 80,
+    startDate: "Mars 2024",
+    achievements: [
+      "80 enfants participants",
+      "1 sortie/mois",
+      "5 musées visités",
+      "Guides professionnels"
+    ]
+  },
+  {
+    id: 18,
+    title: "Cinéma en Plein Air",
+    category: "Loisirs",
+    description: "Projections de films éducatifs en extérieur",
+    longDescription: "Tous les mois en été, nous organisons des séances de cinéma en plein air avec des films éducatifs suivis de débats.",
+    icon: Users,
+    gradient: "from-yellow-500 to-orange-600",
+    image: images.cinema,
+    status: "Saisonnier",
+    participants: 200,
+    startDate: "Juin 2024",
+    achievements: [
+      "200 spectateurs/séance",
+      "5 projections/été",
+      "Thématiques variées",
+      "Espace discussion"
+    ]
   }
 ];
 
 const stats = [
-  { label: "Projets Actifs", value: 6, icon: Target, gradient: "from-blue-500 to-indigo-600" },
+  { label: "Projets Actifs", value: 18, icon: Target, gradient: "from-blue-500 to-indigo-600" },
   { label: "Enfants Bénéficiaires", value: 465, icon: Users, gradient: "from-purple-500 to-pink-600" },
   { label: "Bénévoles Mobilisés", value: 45, icon: Heart, gradient: "from-emerald-500 to-teal-600" },
   { label: "Centres d'Action", value: 8, icon: MapPin, gradient: "from-orange-500 to-red-600" },
@@ -177,8 +405,8 @@ export default function NosProjets() {
   const categories = ["Tous", "Éducation", "Art & Culture", "Sport & Santé", "Solidarité", "Innovation", "Loisirs"];
 
   const filteredProjects = selectedCategory === "Tous" 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+    ? projects.slice(0, 3) // Affiche 3 projets pour "Tous"
+    : projects.filter(project => project.category === selectedCategory).slice(0, 3); // Limite à 3 par catégorie
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -293,11 +521,20 @@ export default function NosProjets() {
               Découvrez nos actions concrètes pour transformer la vie des enfants de Casablanca
             </p>
             <div className="flex gap-6 justify-center flex-wrap">
-              <button className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                Découvrir nos actions
+              <button
+                className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                onClick={() => window.location.href = "/impliquer"}
+              >
+                S'impliquer
               </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
-                Nous soutenir
+              <button
+                onClick={() => {
+                  const section = document.getElementById('projets');
+                  if (section) section.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1"
+              >
+                S'avoir plus
               </button>
             </div>
           </div>
@@ -363,7 +600,7 @@ export default function NosProjets() {
       </section>
 
       {/* Section Projets */}
-      <section className="pb-20 px-6 max-w-7xl mx-auto">
+       <section className="pb-20 px-6 max-w-7xl mx-auto" id="projets">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, i) => (
             <AnimatedCard key={project.id} delay={i * 100}>
@@ -419,7 +656,10 @@ export default function NosProjets() {
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <button className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200">
+                    <button
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200"
+                      onClick={() => setSelectedProject(project)}
+                    >
                       En savoir plus
                       <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
                     </button>
@@ -507,27 +747,18 @@ export default function NosProjets() {
         </div>
       )}
 
-      {/* Section Appel à l'action */}
+      {/* Section Appel à l'action (remplacement) */}
       <section className="py-20 px-6 max-w-5xl mx-auto">
         <AnimatedCard>
           <div className="relative p-12 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 rounded-3xl shadow-2xl text-white overflow-hidden">
             <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-y-20 -translate-x-20" />
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-y-16 translate-x-16" />
-            
             <div className="relative z-10 text-center">
               <h3 className="text-4xl font-bold mb-8">Rejoignez notre Mission</h3>
               <p className="text-xl md:text-2xl font-light leading-relaxed max-w-4xl mx-auto mb-8">
-                Chaque projet a besoin de votre soutien pour grandir et toucher plus d'enfants. 
-                Ensemble, nous pouvons transformer des vies et construire un avenir meilleur.
+                Chaque projet a besoin de votre soutien pour grandir et toucher plus d'enfants.<br />
+                <span className="font-semibold text-yellow-200">"Ensemble, construisons un avenir meilleur pour chaque enfant."</span>
               </p>
-              <div className="flex gap-6 justify-center flex-wrap">
-                <button className="px-8 py-4 bg-white text-orange-600 font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                  Devenir bénévole
-                </button>
-                <button className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/30 hover:bg-white/30 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
-                  Faire un don
-                </button>
-              </div>
             </div>
           </div>
         </AnimatedCard>

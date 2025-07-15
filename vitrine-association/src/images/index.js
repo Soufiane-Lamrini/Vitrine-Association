@@ -1,0 +1,27 @@
+export { default as soutienScolaire } from './soutien-scolaire.jpg';
+export { default as bibliotheque } from './bibliotheque.jpg';
+export { default as langues } from './langues.jpg';
+export { default as ateliersCreatifs } from './ateliers-creatifs.jpg';
+export { default as theatre } from './theatre.jpg';
+export { default as musique } from './musique.jpg';
+export { default as sport } from './sport.jpg';
+export { default as yoga } from './yoga.jpg';
+export { default as nutrition } from './nutrition.jpg';
+export { default as aideAlimentaire } from './aide-alimentaire.jpg';
+export { default as kitsScolaires } from './kits-scolaires.jpg';
+export { default as vetements } from './vetements.jpg';
+export { default as ecoleDemain } from './ecole-demain.jpg';
+export { default as coding } from './coding.jpg';
+export { default as robotique } from './robotique.jpg';
+export { default as campsEte } from './camps-ete.jpg';
+export { default as sorties } from './sorties.jpg';
+export { default as cinema } from './cinema.jpg';
+export { default as soufianeLamrini } from './SoufianeLamrini.jpg';
+export { default as charaf } from './Charaf.jpg';
+export { default as ateliertherapie } from './AtelierTherapie.jpg';
+export { default as anniversaire } from './Anniversaire.jpg';
+export { default as sortieEducative } from './SortieEducative.jpg';
+export { default as plantationArbres } from './PlantationArbres.jpg';
+export { default as tournoiSportif } from './TournoiSportif.jpg';
+
+// Ajoute toutes les images présentes dans src/images

@@ -1,76 +1,128 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Camera, Image, Heart, Eye, Download, Share2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Camera, Image, Heart, Eye, Download, Share2, ChevronLeft, ChevronRight, Search, Filter } from "lucide-react";
+import * as images from '../images';
 
 const galleryItems = [
   {
     id: 1,
-    src: "src/assets/images/galerie/téléchargement.webp",
+    src: images.ateliertherapie,
     category: "Ateliers",
     title: "Atelier d'Art Thérapie",
     date: "15 Mars 2024",
     description: "Les enfants ont exprimé leurs émotions à travers la peinture lors de notre atelier d'art thérapie hebdomadaire. Cet espace de création libre permet aux enfants de s'exprimer sans mots et de développer leur confiance en eux.",
     location: "Centre Nour, Casablanca",
     quote: "« La peinture m'aide à montrer ce que je ressens » - Amina, 8 ans",
-    tags: ["Art", "Thérapie", "Créativité"]
+    tags: ["Art", "Thérapie", "Créativité"],
+    likes: 124,
+    views: 568
   },
   {
     id: 2,
-    src: "src/assets/images/galerie/distribué .jpeg",
+    src: images.kitsScolaires,
     category: "Activités",
     title: "Distribution de Kits Scolaires",
     date: "10 Septembre 2023",
     description: "Pour la rentrée scolaire, nous avons distribué 250 kits complets (cartables, fournitures, uniformes) aux enfants défavorisés du quartier Sbata. Cette action permet de réduire les inégalités et d'offrir les mêmes chances à tous.",
     location: "École Al Amal, Casablanca",
     quote: "« Maintenant je peux aller à l'école comme mes amis ! » - Youssef, 7 ans",
-    tags: ["Éducation", "Scolarité", "Rentrée"]
+    tags: ["Éducation", "Scolarité", "Rentrée"],
+    likes: 89,
+    views: 432
   },
   {
     id: 3,
-    src: "src/assets/images/galerie/Anniversaire.jpg", 
+    src: images.anniversaire,
     category: "Événements",
     title: "Fête d'Anniversaire Collective",
     date: "20 Avril 2024",
     description: "Nous célébrons chaque trimestre les anniversaires de tous les enfants qui n'ont pas la chance de fêter leur jour spécial en famille. Jeux, gâteaux et cadeaux rendent ces moments inoubliables.",
     location: "Jardin Public de Casablanca",
     quote: "« C'était mon premier gâteau d'anniversaire » - Karim, 13 ans",
-    tags: ["Fête", "Joie", "Célébration"]
+    tags: ["Fête", "Joie", "Célébration"],
+    likes: 156,
+    views: 721
   },
   {
     id: 4,
-    src: "src/assets/images/galerie/SoutienScolaire.jpg", 
+    src: images.soutienScolaire,
     category: "Ateliers",
     title: "Cours de Soutien Scolaire",
     date: "5 Janvier 2024",
     description: "Nos bénévoles offrent un soutien scolaire personnalisé pour aider les enfants en difficulté. Chaque séance est adaptée aux besoins spécifiques de l'enfant.",
     location: "Bibliothèque Municipale",
     quote: "« Maintenant je comprends mieux les maths ! » - Leila, 10 ans",
-    tags: ["Éducation", "Apprentissage", "Soutien"]
+    tags: ["Éducation", "Apprentissage", "Soutien"],
+    likes: 76,
+    views: 389
   },
   {
     id: 5,
-    src: "src/assets/images/galerie/img.webp", 
+    src: images.sortieEducative,
     category: "Activités",
     title: "Sortie Éducative au Musée",
     date: "12 Novembre 2023",
     description: "Découverte culturelle pour 50 enfants au Musée d'Art Contemporain. Cette sortie a éveillé leur curiosité et élargi leurs horizons.",
     location: "Musée d'Art Contemporain, Casablanca",
     quote: "« Je veux devenir artiste plus tard ! » - Samir, 11 ans",
-    tags: ["Culture", "Découverte", "Sortie"]
+    tags: ["Culture", "Découverte", "Sortie"],
+    likes: 112,
+    views: 498
   },
   {
     id: 6,
-    src: "src/assets/images/galerie/Sport.png", 
+    src: images.tournoiSportif,
     category: "Événements",
     title: "Tournoi Sportif Annuel",
     date: "8 Juin 2024",
     description: "Compétition amicale entre les enfants de différents centres. Football, course et jeux traditionnels ont rythmé cette journée sportive.",
     location: "Stade Municipal",
     quote: "« On a gagné mais l'important c'était de jouer ensemble » - Team Espoir",
-    tags: ["Sport", "Compétition", "Équipe"]
-  }
+    tags: ["Sport", "Compétition", "Équipe"],
+    likes: 143,
+    views: 654
+  },
+  {
+    id: 7,
+    src: images.sport,
+    category: "Événements",
+    title: "Journée Sportive Inclusive",
+    date: "3 Mai 2024",
+    description: "Une journée dédiée au sport adapté pour les enfants en situation de handicap. Activités paralympiques et ateliers de sensibilisation pour promouvoir l'inclusion.",
+    location: "Complexe Sportif Al Amal",
+    quote: "« Ici, tout le monde peut participer à sa manière » - Coach Hassan",
+    tags: ["Inclusion", "Sport Adapté", "Handicap"],
+    likes: 98,
+    views: 412
+  },
+  {
+    id: 8,
+    src: images.robotique,
+    category: "Ateliers",
+    title: "Initiation à la Robotique",
+    date: "22 Février 2024",
+    description: "Premiers pas dans le monde de la programmation et de la robotique avec des kits éducatifs. Les enfants ont construit et programmé leurs premiers robots simples.",
+    location: "Espace Technologie Jeunesse",
+    quote: "« Mon robot obéit à mes commandes ! » - Omar, 12 ans",
+    tags: ["Technologie", "STEM", "Innovation"],
+    likes: 132,
+    views: 587
+  },
+  {
+    id: 9,
+    src: images.plantationArbres,
+    category: "Activités",
+    title: "Opération Reboisement",
+    date: "12 Décembre 2023",
+    description: "150 arbres plantés par les enfants du quartier dans le cadre de notre programme d'éducation environnementale. Chaque enfant est devenu parrain d'un arbre.",
+    location: "Parc Ibn Battouta",
+    quote: "« Je viendrai voir grandir mon arbre » - Fatima, 9 ans",
+    tags: ["Écologie", "Nature", "Développement Durable"],
+    likes: 145,
+    views: 623
+  },
+  
 ];
-
 const categories = [
   { name: "Tous", count: galleryItems.length, icon: Image, gradient: "from-blue-500 to-indigo-600" },
   { name: "Ateliers", count: galleryItems.filter(i => i.category === "Ateliers").length, icon: Heart, gradient: "from-purple-500 to-pink-600" },
@@ -103,6 +155,8 @@ export default function Galerie() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [selectedCategory, setSelectedCategory] = useState("Tous");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("date-recent");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -130,6 +184,55 @@ export default function Galerie() {
     
     setSelectedImage(galleryItems[newIndex]);
   };
+
+  // Helper to convert French date string to JS Date
+  function parseFrenchDate(dateStr) {
+    const months = {
+      "Janvier": "January",
+      "Février": "February",
+      "Mars": "March",
+      "Avril": "April",
+      "Mai": "May",
+      "Juin": "June",
+      "Juillet": "July",
+      "Août": "August",
+      "Septembre": "September",
+      "Octobre": "October",
+      "Novembre": "November",
+      "Décembre": "December"
+    };
+    // Example: "15 Mars 2024"
+    const parts = dateStr.split(" ");
+    if (parts.length === 3) {
+      const [day, frMonth, year] = parts;
+      const enMonth = months[frMonth] || frMonth;
+      return new Date(`${day} ${enMonth} ${year}`);
+    }
+    return new Date(dateStr);
+  }
+
+  const filteredItems = galleryItems
+    .filter(item => 
+      (selectedCategory === "Tous" || item.category === selectedCategory) &&
+      (searchQuery === "" || 
+       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+       item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+    )
+    .sort((a, b) => {
+      switch(sortOption) {
+        case "date-recent":
+          return parseFrenchDate(b.date) - parseFrenchDate(a.date);
+        case "date-old":
+          return parseFrenchDate(a.date) - parseFrenchDate(b.date);
+        case "popular":
+          return b.likes - a.likes;
+        case "views":
+          return b.views - a.views;
+        default:
+          return 0;
+      }
+    });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-slate-800 overflow-x-hidden">
@@ -232,13 +335,16 @@ export default function Galerie() {
             </p>
             <div className="flex gap-6 justify-center flex-wrap">
               <button 
-                onClick={() => document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => window.location.href = "/impliquer"}
                 className="px-8 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-full hover:scale-105 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
-                Voir les photos
-              </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1">
                 S'impliquer
+              </button>
+              <button 
+                onClick={() => document.getElementById('explorer').scrollIntoView({ behavior: 'smooth' })}
+                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border-2 border-white/20 hover:bg-white/20 hover:scale-105 transition-all duration-300 transform hover:-translate-y-1"
+              >
+                Explorer la galerie
               </button>
             </div>
           </div>
@@ -251,49 +357,127 @@ export default function Galerie() {
         </div>
       </section>
 
-      {/* Section Catégories */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
+      {/* Section Explorer */}
+      <section className="py-20 px-6 max-w-7xl mx-auto" id="explorer">
         <AnimatedCard>
-          <h3 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Explorez par Catégorie
-          </h3>
+          <div className="text-center mb-16">
+            <h3 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Explorez notre Univers
+            </h3>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Naviguez à travers nos différentes activités et découvrez les moments magiques que nous partageons
+            </p>
+          </div>
         </AnimatedCard>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {categories.map(({ name, count, icon: IconComponent, gradient }, i) => (
-            <AnimatedCard key={i} delay={i * 150}>
-              <button
+        {/* Filtres interactifs */}
+        <AnimatedCard delay={100}>
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {categories.map(({ name, icon: IconComponent, gradient }, i) => (
+              <motion.button
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(name)}
-                className={`group relative p-6 w-full bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/20 overflow-hidden ${
-                  selectedCategory === name ? 'ring-2 ring-blue-400' : ''
+                className={`px-5 py-3 rounded-full flex items-center gap-2 transition-all duration-300 ${
+                  selectedCategory === name 
+                    ? `bg-gradient-to-r ${gradient} text-white shadow-lg`
+                    : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
                 }`}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                <IconComponent className="w-5 h-5" />
+                <span>{name}</span>
+                {selectedCategory === name && (
+                  <motion.span 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </motion.span>
+                )}
+              </motion.button>
+            ))}
+          </div>
+        </AnimatedCard>
 
-                <div className="relative z-10 text-center">
-                  <div className={`inline-flex p-4 rounded-full bg-gradient-to-br ${gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <IconComponent className="text-2xl text-white" />
-                  </div>
-                  <h4 className={`text-xl font-bold mb-2 bg-gradient-to-br ${gradient} bg-clip-text text-transparent`}>
-                    {name}
-                  </h4>
-                  <p className="text-slate-600 group-hover:text-slate-800 transition-colors duration-300">
-                    {count} {count > 1 ? 'photos' : 'photo'}
+        {/* Statistiques visuelles */}
+        <AnimatedCard delay={200}>
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 mb-12">
+            <h4 className="text-xl font-semibold text-slate-800 mb-4">Notre Galerie en Chiffres</h4>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {categories.map(({ name, count, gradient }, i) => (
+                <div key={i} className="p-4 rounded-xl bg-gradient-to-br from-white to-slate-50 border border-slate-100">
+                  <div className={`w-full h-2 mb-3 rounded-full bg-gradient-to-r ${gradient} opacity-80`} />
+                  <p className="text-sm text-slate-500">{name}</p>
+                  <p className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-700 bg-clip-text text-transparent">
+                    {count}
                   </p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </AnimatedCard>
+
+        {/* Barre de recherche et tri */}
+        <AnimatedCard delay={300}>
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-8">
+            <div className="relative w-full md:w-96">
+              <input
+                type="text"
+                placeholder="Rechercher un moment spécifique..."
+                className="w-full pl-10 pr-4 py-3 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Search className="absolute left-3 top-3.5 h-5 w-5 text-slate-400" />
+            </div>
+            
+            <div className="flex gap-3 w-full md:w-auto">
+              <select 
+                className="px-4 py-3 bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+              >
+                <option value="date-recent">Date récente</option>
+                <option value="date-old">Date ancienne</option>
+                <option value="popular">Plus populaires</option>
+                <option value="views">Plus vues</option>
+              </select>
+              
+              <button className="px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl hover:shadow-lg transition-all">
+                <Filter className="w-5 h-5" />
               </button>
-            </AnimatedCard>
-          ))}
-        </div>
+            </div>
+          </div>
+        </AnimatedCard>
       </section>
 
       {/* Section Galerie */}
-      <section id="gallery-section" className="pb-20 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {galleryItems
-            .filter(item => selectedCategory === "Tous" || item.category === selectedCategory)
-            .map((item, i) => (
-              <AnimatedCard key={item.id} delay={i * 100}>
+      <section className="pb-20 px-6 max-w-7xl mx-auto">
+        {filteredItems.length === 0 ? (
+          <AnimatedCard>
+            <div className="text-center py-20">
+              <h4 className="text-2xl font-semibold text-slate-700 mb-4">Aucun résultat trouvé</h4>
+              <p className="text-slate-500 mb-6">Essayez de modifier vos critères de recherche ou de filtrage</p>
+              <button 
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedCategory("Tous");
+                  setSortOption("date-recent");
+                }}
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:shadow-lg transition-all"
+              >
+                Réinitialiser les filtres
+              </button>
+            </div>
+          </AnimatedCard>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {filteredItems.map((item, i) => (
+              <AnimatedCard key={item.id} delay={i * 50}>
                 <motion.div
                   whileHover={{ scale: 1.05, y: -10 }}
                   className="group relative overflow-hidden rounded-2xl shadow-lg bg-white/80 backdrop-blur-sm border border-white/20 cursor-pointer"
@@ -311,14 +495,22 @@ export default function Galerie() {
                       <h4 className="font-semibold mb-1">{item.title}</h4>
                       <p className="text-sm text-gray-200">{item.category} • {item.date}</p>
                     </div>
-                    <div className="absolute top-4 right-4 p-2 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Eye className="w-4 h-4 text-white" />
+                    <div className="absolute top-4 right-4 flex gap-2">
+                      <div className="p-2 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+                        <Heart className="w-4 h-4 text-white" />
+                        <span className="text-xs text-white">{item.likes}</span>
+                      </div>
+                      <div className="p-2 bg-white/20 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1">
+                        <Eye className="w-4 h-4 text-white" />
+                        <span className="text-xs text-white">{item.views}</span>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
               </AnimatedCard>
             ))}
-        </div>
+          </div>
+        )}
       </section>
 
       {/* Modal pour image agrandie */}
@@ -389,6 +581,20 @@ export default function Galerie() {
                     {selectedImage.quote}
                   </blockquote>
                 )}
+                
+                <div className="flex justify-between items-center mb-6">
+                  <div className="flex gap-4">
+                    <div className="flex items-center gap-1 text-slate-500">
+                      <Heart className="w-5 h-5" />
+                      <span>{selectedImage.likes} J'aime</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-slate-500">
+                      <Eye className="w-5 h-5" />
+                      <span>{selectedImage.views} Vues</span>
+                    </div>
+                  </div>
+                  <span className="text-sm text-slate-400">{selectedImage.date}</span>
+                </div>
                 
                 <div className="flex gap-3 flex-wrap">
                   <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2">
