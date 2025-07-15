@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { BookOpen, Palette, Trophy, Heart, Users, Calendar, MapPin, Target, ArrowRight, CheckCircle } from "lucide-react";
 import * as images from '../images';
 const projects = [
@@ -445,44 +445,93 @@ export default function NosProjets() {
 
       {/* Header avec navigation */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled 
-            ? 'bg-white/90 backdrop-blur-lg shadow-xl border-b border-white/20' 
-            : 'bg-transparent'
-        }`}
-      >
-        <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <h1
-            className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
-              scrolled ? 'text-slate-800' : 'text-white'
+  className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+    scrolled 
+      ? 'bg-white/90 backdrop-blur-lg shadow-xl border-b border-white/20' 
+      : 'bg-transparent'
+  }`}
+>
+  <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+    <h1
+      className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
+        scrolled ? 'text-slate-800' : 'text-white'
+      }`}
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+    >
+      Nour pour l'Enfance
+    </h1>
+    
+    <button
+      onClick={() => setNavOpen(!navOpen)}
+      className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+      aria-label="Menu mobile"
+      aria-expanded={navOpen}
+    >
+      <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+      <div className={`w-6 h-0.5 bg-current my-1 transition-all duration-300 ${navOpen ? 'opacity-0' : ''}`} />
+      <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+    </button>
+    
+    <ul className={`hidden md:flex gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
+      {[
+        { label: "Accueil", path: "/" },
+        { label: "À propos", path: "/a-propos" },
+        { label: "Projets", path: "/projets" },
+        { label: "Galerie", path: "/galerie" },
+        { label: "S'impliquer", path: "/impliquer" },
+        { label: "Contact", path: "/contact" }
+      ].map(({ label, path }, idx) => (
+        <li key={idx}>
+          <a
+            href={path}
+            className={`relative block cursor-pointer py-2 px-4 rounded-lg hover:bg-white/10 transition-all duration-300 group ${
+              window.location.pathname === path ? "bg-white/20 font-bold" : ""
             }`}
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-current={window.location.pathname === path ? "page" : undefined}
           >
-            Nour pour l'Enfance
-          </h1>
-          
-          <button
-            onClick={() => setNavOpen(!navOpen)}
-            className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
-          >
-            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-            <div className={`w-6 h-0.5 bg-current my-1 transition-all duration-300 ${navOpen ? 'opacity-0' : ''}`} />
-            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-          </button>
-          
-          <ul className={`hidden md:flex gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
-            {["Accueil", "À propos", "Projets", "Galerie", "Contact"].map((item, idx) => (
-              <li
-                key={idx}
-                className="relative cursor-pointer py-2 px-4 rounded-lg hover:bg-white/10 transition-all duration-300 group"
-              >
-                {item}
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 group-hover:w-full transition-all duration-300" />
+            {label}
+            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 group-hover:w-full transition-all duration-300" />
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <AnimatePresence>
+      {navOpen && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden absolute top-full left-0 right-0 bg-white/90 backdrop-blur-lg overflow-hidden"
+        >
+          <ul className="px-6 py-4 space-y-4">
+            {[
+              { label: "Accueil", path: "/" },
+              { label: "À propos", path: "/a-propos" },
+              { label: "Projets", path: "/projets" },
+              { label: "Galerie", path: "/galerie" },
+              { label: "Contact", path: "/contact" }
+            ].map(({ label, path }, idx) => (
+              <li key={idx}>
+                <a
+                  href={path}
+                  className={`block py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors ${
+                    window.location.pathname === path ? "bg-blue-100/50 font-bold" : ""
+                  }`}
+                  onClick={() => setNavOpen(false)}
+                  aria-current={window.location.pathname === path ? "page" : undefined}
+                >
+                  {label}
+                </a>
               </li>
             ))}
           </ul>
-        </nav>
-      </header>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </nav>
+</header>
 
       {/* Section Hero */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
