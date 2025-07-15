@@ -713,43 +713,44 @@ export default function Galerie() {
         </AnimatedCard>
       </section>
       
-      {/* Pied de page */}
-      <footer className="relative mt-20 bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
+      {/* Footer */}
+      <footer className="relative mt-12 bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" />
-
-        <div className="relative z-10 py-12 px-6 text-center">
+        
+        <div className="relative z-10 py-8 sm:py-10 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <h4 className="text-2xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+            <div className="mb-6 sm:mb-8">
+              <h4 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
                 Restez Connectés
               </h4>
-              <div className="flex justify-center space-x-6">
+              <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
                 {[
                   { icon: "LinkedIn", href: "#", color: "hover:text-blue-400" },
                   { icon: "Facebook", href: "https://facebook.com/AssociationNourEnfance", color: "hover:text-blue-500" },
                   { icon: "Instagram", href: "#", color: "hover:text-pink-400" },
                   { icon: "TikTok", href: "#", color: "hover:text-purple-400" }
-                ].map(({ icon, href, color }, index) => (
+                ].map(({icon, href, color}, index) => (
                   <a
                     key={index}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 bg-white/10 backdrop-blur-sm rounded-full ${color} transition-all duration-300 transform hover:scale-110 hover:bg-white/20 text-sm font-semibold`}
+                    className={`px-3 py-2 sm:px-4 sm:py-2 bg-white/10 backdrop-blur-sm rounded-full ${color} transition-all duration-300 hover:scale-105 hover:bg-white/20 text-xs sm:text-sm font-medium`}
                   >
                     {icon}
                   </a>
                 ))}
               </div>
             </div>
-
-            <div className="border-t border-white/10 pt-8">
-              <p className="text-slate-300">
+            
+            <div className="border-t border-white/10 pt-6 sm:pt-8">
+              <p className="text-xs sm:text-sm text-slate-300">
                 © {new Date().getFullYear()} Association Nour pour l'Enfance. Tous droits réservés.
               </p>
-              <p className="text-slate-400 mt-2">
-                Rue 17, Quartier Sbata, Casablanca | contact@nour-enfance.org | +212 6 61 23 45 78
-              </p>
+              <div className="text-xs text-slate-400 mt-2 space-y-1">
+                <p>Rue 17, Quartier Sbata, Casablanca</p>
+                <p>contact@nour-enfance.org | +212 6 61 23 45 78</p>
+              </div>
             </div>
           </div>
         </div>
