@@ -127,7 +127,6 @@ const FeatureModal = ({ open, onClose, feature }) => {
           </div>
           <h3 className="text-2xl font-bold mb-4 text-slate-800">{feature.title}</h3>
           <p className="text-slate-600 mb-4">{feature.description}</p>
-          {/* Ajoute ici plus de détails si tu veux */}
           <p className="text-slate-500 text-sm">
             Pour en savoir plus, contactez-nous ou découvrez nos projets détaillés dans la section dédiée.
           </p>
@@ -213,7 +212,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-slate-800 overflow-x-hidden">
       <FloatingBackgroundElements mousePosition={mousePosition} />
 
-      {/* Header */}
+      {/* Header amélioré */}
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
           scrolled
@@ -233,23 +232,24 @@ export default function Home() {
             Nour pour l'Enfance
           </h1>
 
+          {/* Bouton burger amélioré */}
           <button
             onClick={() => setNavOpen(!navOpen)}
-            className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
-            aria-label="Menu mobile"
+            className="md:hidden p-3 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex flex-col items-center justify-center"
+            aria-label={navOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={navOpen}
           >
-            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-            <div className={`w-6 h-0.5 bg-current my-1 transition-all duration-300 ${navOpen ? 'opacity-0' : ''}`} />
-            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+            <span className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`} />
+            <span className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
           </button>
 
+          {/* Navigation desktop */}
           <ul className={`hidden md:flex gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
             {[
               { label: "Accueil", path: "/" },
               { label: "À propos", path: "/a-propos" },
               { label: "Projets", path: "/projets" },
-              { label: "Galerie", path: "/galerie" }, // Ajout de la page Galerie
+              { label: "Galerie", path: "/galerie" },
               { label: "S'impliquer", path: "/impliquer" },
               { label: "Contact", path: "/contact" }
             ].map(({ label, path }, idx) => (
@@ -268,76 +268,74 @@ export default function Home() {
             ))}
           </ul>
 
+          {/* Navigation mobile améliorée */}
           <AnimatePresence>
             {navOpen && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
-                className="md:hidden overflow-hidden"
+                className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 pt-24"
+                onClick={() => setNavOpen(false)}
               >
-                <ul className="px-6 py-4 space-y-4 bg-white/90 backdrop-blur-lg">
-                  {[
-                    { label: "Accueil", path: "/" },
-                    { label: "À propos", path: "/a-propos" },
-                    { label: "Projets", path: "/projets" },
-                    { label: "Galerie", path: "/galerie" }, // Ajout de la page Galerie
-                    { label: "S'impliquer", path: "/impliquer" },
-                    { label: "Contact", path: "/contact" }
-                  ].map(({ label, path }, idx) => (
-                    <li key={idx}>
-                      <a
-                        href={path}
-                        className={`block py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors ${
-                          window.location.pathname === path ? "bg-blue-100/50 font-bold" : ""
-                        }`}
-                        aria-current={window.location.pathname === path ? "page" : undefined}
+                <motion.div 
+                  className="bg-white shadow-2xl rounded-t-3xl overflow-hidden"
+                  initial={{ y: 50 }}
+                  animate={{ y: 0 }}
+                  exit={{ y: 50 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <ul className="py-6 px-4 space-y-4">
+                    {[
+                      { label: "Accueil", path: "/" },
+                      { label: "À propos", path: "/a-propos" },
+                      { label: "Projets", path: "/projets" },
+                      { label: "Galerie", path: "/galerie" },
+                      { label: "S'impliquer", path: "/impliquer" },
+                      { label: "Contact", path: "/contact" }
+                    ].map(({ label, path }, idx) => (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 + 0.2 }}
                       >
-                        {label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                        <a
+                          href={path}
+                          className={`block py-4 px-6 text-lg rounded-xl transition-colors ${
+                            window.location.pathname === path 
+                              ? "bg-blue-100 text-blue-600 font-semibold" 
+                              : "hover:bg-gray-100 text-gray-800"
+                          }`}
+                          aria-current={window.location.pathname === path ? "page" : undefined}
+                          onClick={() => {
+                            setNavOpen(false);
+                            window.scrollTo(0, 0);
+                          }}
+                        >
+                          {label}
+                        </a>
+                      </motion.li>
+                    ))}
+                  </ul>
+                  
+                  <div className="px-6 pb-8 pt-4 bg-gray-50">
+                    <button 
+                      className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-md"
+                      onClick={() => {
+                        setNavOpen(false);
+                        window.location.href = "/impliquer";
+                      }}
+                    >
+                      Faire un don
+                    </button>
+                  </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
         </nav>
-
-        <AnimatePresence>
-          {navOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
-            >
-              <ul className="px-6 py-4 space-y-4 bg-white/90 backdrop-blur-lg">
-                {[
-                  { label: "Accueil", path: "/" },
-                  { label: "À propos", path: "/a-propos" },
-                  { label: "Projets", path: "/projets" },
-                  { label: "Galerie", path: "/galerie" }, // Ajout de la page Galerie
-                  { label: "S'impliquer", path: "/impliquer" },
-                  { label: "Contact", path: "/contact" }
-                ].map(({ label, path }, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={path}
-                      className={`block py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors ${
-                        window.location.pathname === path ? "bg-blue-100/50 font-bold" : ""
-                      }`}
-                      aria-current={window.location.pathname === path ? "page" : undefined}
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </header>
 
       {/* Section Hero */}

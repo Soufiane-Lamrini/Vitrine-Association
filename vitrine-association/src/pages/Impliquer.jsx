@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HandHeart, Share2, HeartPulse } from "lucide-react";
+import { HandHeart, Share2, HeartPulse, Home, Info, Folder, Image as ImageIcon, Mail, Phone, X } from "lucide-react";
 
 export default function GetInvolved() {
   const [scrolled, setScrolled] = useState(false);
@@ -68,69 +68,36 @@ export default function GetInvolved() {
 
       {/* Header */}
       <header
-  className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-    scrolled
-      ? 'bg-white/90 backdrop-blur-lg shadow-xl border-b border-white/20'
-      : 'bg-transparent'
-  }`}
-  aria-label="Navigation principale"
->
-  <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-    <h1
-      className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
-        scrolled ? 'text-slate-800' : 'text-white'
-      }`}
-      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      aria-label="Nour pour l'Enfance - Retour à l'accueil"
-    >
-      Nour pour l'Enfance
-    </h1>
-
-    <button
-      onClick={() => setNavOpen(!navOpen)}
-      className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
-      aria-label="Menu mobile"
-      aria-expanded={navOpen}
-    >
-      <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
-      <div className={`w-6 h-0.5 bg-current my-1 transition-all duration-300 ${navOpen ? 'opacity-0' : ''}`} />
-      <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
-    </button>
-
-    <ul className={`hidden md:flex gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
-      {[
-        { label: "Accueil", path: "/" },
-        { label: "À propos", path: "/a-propos" },
-        { label: "Projets", path: "/projets" },
-        { label: "Galerie", path: "/galerie" },
-        { label: "S'impliquer", path: "/impliquer" },
-        { label: "Contact", path: "/contact" }
-      ].map(({ label, path }, idx) => (
-        <li key={idx}>
-          <a
-            href={path}
-            className={`relative block cursor-pointer py-2 px-4 rounded-lg hover:bg-white/10 transition-all duration-300 group ${
-              window.location.pathname === path ? "bg-white/20 font-bold" : ""
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? 'bg-white/90 backdrop-blur-lg shadow-xl border-b border-white/20'
+            : 'bg-transparent'
+        }`}
+        aria-label="Navigation principale"
+      >
+        <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <h1
+            className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
+              scrolled ? 'text-slate-800' : 'text-white'
             }`}
-            aria-current={window.location.pathname === path ? "page" : undefined}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Nour pour l'Enfance - Retour à l'accueil"
           >
-            {label}
-            <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 group-hover:w-full transition-all duration-300" />
-          </a>
-        </li>
-      ))}
-    </ul>
+            Nour pour l'Enfance
+          </h1>
 
-    <AnimatePresence>
-      {navOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
-        >
-          <ul className="px-6 py-4 space-y-4 bg-white/90 backdrop-blur-lg">
+          <button
+            onClick={() => setNavOpen(!navOpen)}
+            className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
+            aria-label="Menu mobile"
+            aria-expanded={navOpen}
+          >
+            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
+            <div className={`w-6 h-0.5 bg-current my-1 transition-all duration-300 ${navOpen ? 'opacity-0' : ''}`} />
+            <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? '-rotate-45 -translate-y-1.5' : ''}`} />
+          </button>
+
+          <ul className={`hidden md:flex gap-8 ${scrolled ? 'text-slate-700' : 'text-white'}`}>
             {[
               { label: "Accueil", path: "/" },
               { label: "À propos", path: "/a-propos" },
@@ -142,21 +109,105 @@ export default function GetInvolved() {
               <li key={idx}>
                 <a
                   href={path}
-                  className={`block py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors ${
-                    window.location.pathname === path ? "bg-blue-100/50 font-bold" : ""
+                  className={`relative block cursor-pointer py-2 px-4 rounded-lg hover:bg-white/10 transition-all duration-300 group ${
+                    window.location.pathname === path ? "bg-white/20 font-bold" : ""
                   }`}
                   aria-current={window.location.pathname === path ? "page" : undefined}
                 >
                   {label}
+                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 group-hover:w-full transition-all duration-300" />
                 </a>
               </li>
             ))}
           </ul>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </nav>
-</header>
+
+          {/* Navigation Mobile Améliorée */}
+          <AnimatePresence>
+            {navOpen && (
+              <motion.div
+                initial={{ opacity: 0, x: '100%' }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: '100%' }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                className="md:hidden fixed inset-0 bg-white z-50 pt-24 px-6"
+              >
+                {/* Bouton de fermeture positionné en haut à droite */}
+                <button
+                  onClick={() => setNavOpen(false)}
+                  className="absolute top-6 right-6 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  aria-label="Fermer le menu"
+                >
+                  <X className="w-6 h-6 text-gray-800" />
+                </button>
+
+                {/* Liste des liens de navigation */}
+                <ul className="space-y-6 py-8">
+                  {[
+                    { label: "Accueil", path: "/", icon: Home },
+                    { label: "À propos", path: "/a-propos", icon: Info },
+                    { label: "Projets", path: "/projets", icon: Folder },
+                    { label: "Galerie", path: "/galerie", icon: ImageIcon },
+                    { label: "S'impliquer", path: "/impliquer", icon: HandHeart },
+                    { label: "Contact", path: "/contact", icon: Mail }
+                  ].map((item, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ x: 20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: idx * 0.1, type: 'spring' }}
+                    >
+                      <a
+                        href={item.path}
+                        className={`flex items-center py-4 px-4 text-lg font-medium rounded-xl transition-colors ${
+                          window.location.pathname === item.path
+                            ? "bg-blue-100 text-blue-600"
+                            : "hover:bg-gray-100"
+                        }`}
+                        onClick={() => setNavOpen(false)}
+                      >
+                        <item.icon className="w-6 h-6 mr-4" />
+                        {item.label}
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+
+                {/* Section de contact mobile */}
+                <div className="mt-12 pt-6 border-t border-gray-200">
+                  <h3 className="text-lg font-semibold mb-4">Contact rapide</h3>
+                  <div className="space-y-3">
+                    <a 
+                      href="mailto:contact@nour-enfance.org" 
+                      className="flex items-center text-blue-600"
+                    >
+                      <Mail className="w-5 h-5 mr-3" />
+                      contact@nour-enfance.org
+                    </a>
+                    <a 
+                      href="tel:+212661234578" 
+                      className="flex items-center text-blue-600"
+                    >
+                      <Phone className="w-5 h-5 mr-3" />
+                      +212 6 61 23 45 78
+                    </a>
+                  </div>
+                </div>
+
+                {/* Bouton d'action principal */}
+                <div className="mt-8">
+                  <a
+                    href="/contact"
+                    className="block w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center font-semibold rounded-xl hover:shadow-lg transition-all"
+                    onClick={() => setNavOpen(false)}
+                  >
+                    Nous contacter
+                  </a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+      </header>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
