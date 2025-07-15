@@ -221,8 +221,9 @@ export default function Home() {
         }`}
         aria-label="Navigation principale"
       >
-        <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+        <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
           <h1
+            tabIndex={0}
             className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
               scrolled ? 'text-slate-800' : 'text-white'
             }`}
@@ -235,8 +236,8 @@ export default function Home() {
           {/* Bouton burger amélioré */}
           <button
             onClick={() => setNavOpen(!navOpen)}
-            className="md:hidden p-3 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex flex-col items-center justify-center"
-            aria-label={navOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            className="md:hidden p-3 rounded-xl bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex flex-col items-center justify-center focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label={navOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"}
             aria-expanded={navOpen}
           >
             <span className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : 'mb-1.5'}`} />
@@ -350,7 +351,7 @@ export default function Home() {
 
         <AnimatedParticles />
 
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -392,7 +393,7 @@ export default function Home() {
       </section>
 
       {/* Section Notre Engagement améliorée */}
-      <section id="actions" className="py-20 px-6 max-w-6xl mx-auto" aria-label="Notre engagement">
+      <section id="actions" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto" aria-label="Notre engagement">
         <AnimatedCard>
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -435,7 +436,7 @@ export default function Home() {
 
       {/* Section Chiffres Clés */}
       <section className="py-20 bg-slate-50" aria-label="Nos chiffres clés">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <AnimatedCard>
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -467,7 +468,7 @@ export default function Home() {
 
       {/* Section Témoignages */}
       <section className="py-20 bg-white" aria-label="Témoignages">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <AnimatedCard>
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -499,7 +500,7 @@ export default function Home() {
       </section>
 
       {/* Section Call-to-Action */}
-      <section className="py-20 px-6 max-w-5xl mx-auto" aria-label="Nous soutenir">
+      <section className="py-20 px-4 sm:px-6 max-w-5xl mx-auto" aria-label="Nous soutenir">
         <AnimatedCard>
           <div className="relative p-12 bg-gradient-to-br from-blue-600 via-purple-700 to-indigo-800 rounded-3xl shadow-2xl text-white overflow-hidden">
             <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-y-20 -translate-x-20" aria-hidden="true" />
@@ -528,7 +529,7 @@ export default function Home() {
       <footer className="relative mt-20 bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden" aria-label="Pied de page">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" aria-hidden="true" />
 
-        <div className="relative z-10 py-12 px-6 text-center">
+        <div className="relative z-10 py-12 px-4 sm:px-6 text-center">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">

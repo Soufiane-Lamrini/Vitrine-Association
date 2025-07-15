@@ -141,8 +141,9 @@ export default function About() {
   }`}
   aria-label="Navigation principale"
 >
-  <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+  <nav className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-4">
     <h1
+      tabIndex={0}
       className={`text-3xl font-bold cursor-pointer select-none transition-all duration-500 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:scale-105 ${
         scrolled ? 'text-slate-800' : 'text-white'
       }`}
@@ -154,8 +155,8 @@ export default function About() {
 
     <button
       onClick={() => setNavOpen(!navOpen)}
-      className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300"
-      aria-label="Menu mobile"
+      className="md:hidden p-2 rounded-xl bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      aria-label={navOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"}
       aria-expanded={navOpen}
     >
       <div className={`w-6 h-0.5 bg-current transition-all duration-300 ${navOpen ? 'rotate-45 translate-y-1.5' : ''}`} />
@@ -190,35 +191,65 @@ export default function About() {
     <AnimatePresence>
       {navOpen && (
         <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden absolute top-full left-0 right-0 bg-white/90 backdrop-blur-lg"
+          className="md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 pt-24"
+          onClick={() => setNavOpen(false)}
         >
-          <ul className="px-6 py-4 space-y-4">
-            {[
-              { label: "Accueil", path: "/" },
-              { label: "À propos", path: "/a-propos" },
-              { label: "Projets", path: "/projets" },
-              { label: "Galerie", path: "/galerie" },
-              { label: "S'impliquer", path: "/impliquer" },
-              { label: "Contact", path: "/contact" }
-            ].map(({ label, path }, idx) => (
-              <li key={idx}>
-                <a
-                  href={path}
-                  className={`block py-2 px-4 rounded-lg hover:bg-blue-50 transition-colors ${
-                    window.location.pathname === path ? "bg-blue-100/50 font-bold" : ""
-                  }`}
-                  aria-current={window.location.pathname === path ? "page" : undefined}
-                  onClick={() => setNavOpen(false)}
+          <motion.div 
+            className="bg-white shadow-2xl rounded-t-3xl overflow-hidden"
+            initial={{ y: 50 }}
+            animate={{ y: 0 }}
+            exit={{ y: 50 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <ul className="py-6 px-4 space-y-4">
+              {[
+                { label: "Accueil", path: "/" },
+                { label: "À propos", path: "/a-propos" },
+                { label: "Projets", path: "/projets" },
+                { label: "Galerie", path: "/galerie" },
+                { label: "S'impliquer", path: "/impliquer" },
+                { label: "Contact", path: "/contact" }
+              ].map(({ label, path }, idx) => (
+                <motion.li
+                  key={idx}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 + 0.2 }}
                 >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
+                  <a
+                    href={path}
+                    className={`block py-4 px-6 text-lg rounded-xl transition-colors ${
+                      window.location.pathname === path 
+                        ? "bg-blue-100 text-blue-600 font-semibold" 
+                        : "hover:bg-gray-100 text-gray-800"
+                    }`}
+                    aria-current={window.location.pathname === path ? "page" : undefined}
+                    onClick={() => {
+                      setNavOpen(false);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    {label}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="px-6 pb-8 pt-4 bg-gray-50">
+              <button 
+                className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-md"
+                onClick={() => {
+                  setNavOpen(false);
+                  window.location.href = "/impliquer";
+                }}
+              >
+                Faire un don
+              </button>
+            </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -256,7 +287,7 @@ export default function About() {
           );
         })}
         
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
           <div className="animate-fade-in-up">
             <h2 className="text-5xl md:text-7xl font-black mb-8 text-white leading-tight">
               À Propos de
@@ -289,7 +320,7 @@ export default function About() {
       </section>
 
       {/* Section Mission */}
-      <section id="mission" className="py-20 px-6 max-w-6xl mx-auto">
+      <section id="mission" className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
         <AnimatedCard>
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -321,7 +352,7 @@ export default function About() {
 
       {/* Section Chiffres Clés */}
       <section className="py-20 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <AnimatedCard>
             <div className="text-center mb-16">
               <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -349,7 +380,7 @@ export default function About() {
       </section>
 
       {/* Section Histoire */}
-      <section className="py-20 px-6 max-w-4xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
         <AnimatedCard>
           <div className="text-center mb-16">
             <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -388,7 +419,7 @@ export default function About() {
 
       {/* Section Équipe - Cartes agrandies */}
       <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <AnimatedCard>
             <div className="text-center mb-16">
               <h3 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -450,7 +481,7 @@ export default function About() {
       </section>
 
       {/* Section Vision */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
+      <section className="py-20 px-4 sm:px-6 max-w-5xl mx-auto">
         <AnimatedCard>
           <div className="relative p-12 bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 rounded-3xl shadow-2xl text-white overflow-hidden">
             <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full -translate-y-20 -translate-x-20" />
@@ -474,7 +505,7 @@ export default function About() {
       <footer className="relative mt-20 bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10" />
         
-        <div className="relative z-10 py-12 px-6 text-center">
+        <div className="relative z-10 py-12 px-4 sm:px-6 text-center">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h4 className="text-2xl font-bold mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
